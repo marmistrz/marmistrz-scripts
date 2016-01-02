@@ -1,0 +1,29 @@
+#!/bin/sh
+
+kbdlayout()
+{
+	setxkbmap -print | awk -F"+" '/xkb_symbols/ {print $2}' | cut -d '(' -f 2 | cut -d ')' -f 1 |cut -d '_' -f 1
+}
+
+STAMP=/tmp/kbdlayout.stamp
+
+layout=`kbdlayout`
+
+if [ ! -f $STAMP ]
+then
+	touch $STAMP
+	echo $layout
+	exit
+fi
+
+if [ "$layout" == "pl" ]
+then setxkbmap -model ukeyboard -layout ru_phonetic
+elif [ "$layout" == "ru" ]
+then setxkbmap -model ukeyboard -layout gr
+elif [ "$layout" == "gr" ]
+then setxkbmap -model rx-51 -layout pl
+else
+echo "ERROR"
+fi
+
+echo `kbdlayout`

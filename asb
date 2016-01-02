@@ -1,0 +1,2 @@
+#!/bin/sh
+sudo /apophis/scratchbox/sbin/sbox_ctl start && /apophis/scratchbox/login

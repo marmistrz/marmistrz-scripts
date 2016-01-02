@@ -1,0 +1,10 @@
+#!/bin/bash
+if [ ! $# -eq 2 ]
+then
+	echo "Usage: downsample-sox [bit-depth] [sample-rate]"
+	exit 1
+fi
+destdir="${PWD##*/}"
+mkdir "$destdir"
+cp *.jpg "$destdir"/
+for i in *.flac; do sox "$i" -b $1 -r $2 -S "$destdir/$i"; done

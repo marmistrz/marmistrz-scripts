@@ -1,0 +1,2 @@
+#!/bin/sh
+sudo /hathor/scratchbox/sbin/sbox_ctl start && /hathor/scratchbox/login

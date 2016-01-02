@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then echo "Usage: canon-imgrename [YEAR] [DESTINATION DIRECTORY]"; exit 1; fi
+
+year=$1
+destdir=$2
+
+if [[ "$destdir" != /* ]] # convert to absolute path
+then
+	destdir="${PWD}/${destdir}"
+fi
+
+mkdir -p $destdir
+
+# each directory (day)
+
+for i in 1* 
+do
+	if [ ! -d "$i" ]; then continue; fi
+
+	day=${i:4:2}
+	month=${i:6:2}
+
+#	echo $i
+
+	cd "$i" # go into each directory and rename every file
+	for file in *
+	do
+		mv "$file" ${destdir}/"${year}${month}${day}_${file}" # > /dev/null
+	done
+	cd .. # go back to the working directory
+done
+

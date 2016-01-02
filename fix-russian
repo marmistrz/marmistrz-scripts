@@ -1,0 +1,10 @@
+#!/usr/bin/python3
+import sys
+
+out = ""
+
+for i in range(1, len(sys.argv)):
+	out += sys.argv[i].encode('latin-1').decode('cp1251')
+	out += ' '
+
+print(out[:-1], end="")

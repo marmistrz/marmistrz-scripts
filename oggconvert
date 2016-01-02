@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ $# != 1 ] ; then 
+	echo "Usage: oggconvert [output-directory]"
+	exit 1
+fi
+dirname=`basename "$PWD"`
+oggenc -q9 *.flac
+destdir="$1/$dirname"
+#echo $dirname   $destdir
+mkdir -pv "$destdir"
+mv -v *.ogg "$destdir/"
+cp -v *.jpg "$destdir/"

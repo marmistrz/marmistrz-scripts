@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ $# -gt 1 ] 
+then
+    echo "Usage: canon-convert [bitrate]"
+	exit 1
+fi
+
+if ! type "avconv" > /dev/null;
+then
+    echo "avconv is not installed"
+fi
+
+if [ $# -eq 0 ]
+then
+        AB=320k
+else
+	AB=$1
+fi
+
+for i in *.MOV; do ffmpeg -i "$i" -vcodec libx264 -b:v 34M -minrate 29M -maxrate 39M -acodec libfdk_aac -b:a $AB "${i%.*}.mp4"; done
+
+

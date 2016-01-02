@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+import os
+import sys
+import re
+
+if len(sys.argv) != 2:
+    print("Usage: split-cue [cue-file]")
+    sys.exit(1)
+
+script, filename = sys.argv
+
+n, e = os.path.splitext(filename)
+nf = n + "-{0}" + e
+
+parts = []
+
+with open(filename) as ifile:
+    s = ""
+    for line in ifile:
+        if re.match("^FILE*", line):
+            parts.append(s)
+            s = ""
+        s += line
+
+parts.append(s) # remaining stuff
+
+head, *tail = parts
+for i in range(len(tail)):
+    s = head + tail[i]
+    with open(nf.format(repr(i+1)), 'w+') as of:
+        of.write(s)

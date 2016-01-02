@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# $1 - file extension
+# $2 - prefix
+
+if [ $# == 0 ] || [ $# -gt 2 ];
+then
+        echo "Syntax: split-flac [extension] [[prefix]]"
+        exit 1 
+elif [ $# == 1 ]
+then
+        echo Splitting without a prefix
+else
+        echo Splitting with a prefix \"$2\"
+fi
+
+if [ ! -f *"$2.cue" ];    
+then
+        echo Invalid cuefiles number
+fi
+
+cuebreakpoints *"$2.cue"  | sed s/$/0/  |  shnsplit -o flac *"$2.$1" && cuetag *"$2.cue" split*.flac && echo OK && arename split*.flac
+
+

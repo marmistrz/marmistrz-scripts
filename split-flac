@@ -3,10 +3,12 @@
 # $1 - file extension
 # $2 - prefix
 
+set -e
+
 if [ $# == 0 ] || [ $# -gt 2 ];
 then
         echo "Syntax: split-flac [extension] [[prefix]]"
-        exit 1 
+        exit 1
 elif [ $# == 1 ]
 then
         echo Splitting without a prefix
@@ -26,6 +28,12 @@ then
 	exit 3
 fi
 
-cuebreakpoints *"$2.cue" | shnsplit -o flac *"$2.$1" && cuetag *"$2.cue" split*.flac && echo OK && arename split*.flac
-
-
+cuebreakpoints *"$2.cue" | shnsplit -o flac *"$2.$1"
+cuetag.sh *"$2.cue" split*.flac
+echo OK
+if [ "$2" != "" ]; then
+    mkdir $2
+    mv split* $2
+    cd $2
+fi
+arename split*.flac

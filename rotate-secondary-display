@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ $# -ne 1 ]; then
+    echo "Usage: rotate-secondary-display [output]"
+    exit 1
+fi
+
+output="$1"
+has_left=$(xrandr | grep "left (")
+
+if [ "$has_left" != "" ]; then
+    rotate="normal"
+else
+    rotate="left"
+fi
+
+xrandr --output "$output" --rotation "$rotate"

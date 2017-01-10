@@ -4,7 +4,7 @@ if [ $# != 1 ] ; then
 	exit 1
 fi
 dirname=$(basename "$PWD")
-parallel oggenc -q9 {} ::: *.flac
+parallel -q oggenc -q9 {} ::: *.flac
 destdir="$1/$dirname"
 #echo $dirname   $destdir
 mkdir -pv "$destdir"

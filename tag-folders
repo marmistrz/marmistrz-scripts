@@ -1,0 +1,42 @@
+#!/bin/bash
+set -e
+
+usage()
+{
+    echo "Usage: tag-folders [folder]"
+}
+
+if [ $# -ne 1 ]; then
+    usage
+    exit 1
+fi
+
+cd "$1"
+folders=$(find . -mindepth 1 -maxdepth 1 -type d | sort)
+
+loop()
+{
+    nr=0
+    for i in $folders; do
+        files=$i/*
+        for f in $files ; do
+            ((nr++)) || :
+            eval "$1"
+        done
+        eval "$2"
+    done
+}
+
+tagit() # f is the file to be tagged, nr - current loop index
+{
+    printf -v ind "%0${chars}d\n" $nr
+    metaflac --remove-tag=TRACKNUMBER "$f"
+    metaflac --set-tag="TRACKNUMBER=$ind" "$f"
+    arename --verbosity 4 "$f"
+}
+
+loop : :
+total=$nr
+chars=${#total}
+loop tagit 'rmdir $i'
+

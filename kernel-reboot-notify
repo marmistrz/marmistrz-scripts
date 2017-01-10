@@ -1,0 +1,3 @@
+#!/bin/sh
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+su marcin -c "notify-send -i dialog-warning 'You should reboot after a kernel upgrade'"

@@ -1,10 +1,14 @@
 #!/bin/bash
-if [ ! $# -eq 2 ]
+if [ ! $# -eq 3 ]
 then
-	echo "Usage: downsample-sox [bit-depth] [sample-rate]"
+	echo Usage: downsample-sox [bit-depth] [sample-rate] [threads]
 	exit 1
 fi
 destdir="${PWD##*/}"
 mkdir "$destdir"
 cp *.jpg "$destdir"/
-for i in *.flac; do sox "$i" -b $1 -r $2 -S "$destdir/$i"; done
+threads=$3
+for i in *.flac; do
+    ((i=i%threads)); ((i++==0)) && wait
+	sox "$i" -b $1 -r $2 -S "$destdir/$i" &
+done

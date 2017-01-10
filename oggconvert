@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ $# != 2 ] ; then
+if [ $# != 1 ] ; then
 	echo "Usage: oggconvert [output-directory]"
 	exit 1
 fi

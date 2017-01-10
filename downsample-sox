@@ -7,4 +7,4 @@ fi
 destdir="${PWD##*/}"
 mkdir "$destdir"
 cp ./*.jpg "$destdir"/
-sox '{}' -b "$1" -r "$2" -S "$destdir/{}" ::: *.flac
+parallel sox '{}' -b "$1" -r "$2" -S "$destdir/{}" ::: *.flac

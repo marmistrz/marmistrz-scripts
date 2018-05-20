@@ -1,17 +1,26 @@
 #!/bin/bash
-set -e 
+set -e
+
+# $1 = command
+# $2 = human-readable program name
+check_cmd() {
+	if ! command -v "$1" > /dev/null
+	then
+		echo "Error: $2 missing! Exiting..."
+		exit 1
+	fi
+}
 
 if [ ! $# -eq 2 ]
 then
 	echo 'Usage: downsample-sox [bit-depth] [sample-rate]'
 	exit 1
 fi
-if ! command -v parallel > /dev/null
-then 
-	echo 'GNU Parallel missing...!' 
-	exit 1
-fi
+
+check_cmd parallel "GNU Parallel"
+check_cmd sox "Sox"
+
 destdir="${PWD##*/}"
 mkdir "$destdir"
-cp ./*.jpg "$destdir"/
+cp ./*.jpg "$destdir"/ || true # FIXME check if they exist
 parallel -q sox "{}" -b "$1" -r "$2" -S "$destdir/{}" ::: *.flac

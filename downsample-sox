@@ -1,7 +1,14 @@
 #!/bin/bash
+set -e 
+
 if [ ! $# -eq 2 ]
 then
 	echo 'Usage: downsample-sox [bit-depth] [sample-rate]'
+	exit 1
+fi
+if ! command -v parallel > /dev/null
+then 
+	echo 'GNU Parallel missing...!' 
 	exit 1
 fi
 destdir="${PWD##*/}"

@@ -1,0 +1,18 @@
+#!/usr/bin/python
+
+from opencc import OpenCC
+from sys import argv, exit
+import webbrowser
+
+if len(argv) != 2:
+    print("Usage: cnforvo word")
+    print("    word should be in zh_TW (traditional Chinese)")
+    exit(1)
+
+cc = OpenCC('tw2s')
+trad = argv[1]
+simp = cc.convert(trad)
+
+words = set([trad, simp])
+for w in words:
+    webbrowser.open(f"https://forvo.com/word/{w}/#zh")

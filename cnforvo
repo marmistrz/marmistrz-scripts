@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from termcolor import colored
 from opencc import OpenCC
 from sys import argv, exit
 import webbrowser
@@ -9,9 +10,12 @@ if len(argv) != 2:
     print("    word should be in zh_TW (traditional Chinese)")
     exit(1)
 
-cc = OpenCC('tw2s')
 trad = argv[1]
-simp = cc.convert(trad)
+if OpenCC('s2tw').convert(trad) != trad:
+    warn = colored('WARNING', 'yellow')
+    text = f"{warn}: Input probably in Simplified Chinese"
+    print(text)
+simp = OpenCC('tw2s').convert(trad)
 
 words = set([trad, simp])
 for w in words:

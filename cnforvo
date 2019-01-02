@@ -11,11 +11,15 @@ if len(argv) != 2:
     exit(1)
 
 trad = argv[1]
-if OpenCC('s2tw').convert(trad) != trad:
-    warn = colored('WARNING', 'yellow')
-    text = f"{warn}: Input probably in Simplified Chinese"
-    print(text)
+conv = OpenCC('s2tw').convert(trad)
 simp = OpenCC('tw2s').convert(trad)
+
+if conv != trad:
+    warn = colored('WARNING', 'yellow')
+    text = f"{warn}: Input probably in Simplified Chinese, trying automatic conversion"
+    print(text)
+
+    trad = conv
 
 words = set([trad, simp])
 for w in words:

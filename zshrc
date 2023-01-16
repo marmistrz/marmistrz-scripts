@@ -1,3 +1,8 @@
+## Dependencies
+#
+# yay -S zsh antigen find-the-command zsh-autosuggestions zsh-fast-syntax-highlighting git-prompt.zsh fzf
+
+
 # zmodload zsh/zprof # Uncomment to enable profiling
 
 alias pmake="make -j $(nproc)"
@@ -21,12 +26,10 @@ setopt HIST_IGNORE_SPACE
 #Antigen
 source /usr/share/zsh/share/antigen.zsh
 antigen use oh-my-zsh
-#source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-#source /usr/share/doc/find-the-command/ftc.zsh
+source /usr/share/doc/find-the-command/ftc.zsh
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source /usr/share/zsh/scripts/git-prompt.zsh
-#antigen bundle olivierverdier/zsh-git-prompt
 antigen apply
 
 
@@ -43,8 +46,6 @@ PROMPT=$'%{$fg_bold[blue]%}%n@%m %{$fg[green]%}%d %{$fg_bold[white]%}[%?] %{$res
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔"
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
-#GIT_PROMPT_EXECUTABLE="haskell"
-
 
 export LD_LIBRARY_PATH=/usr/local/lib
 
